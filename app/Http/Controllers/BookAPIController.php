@@ -52,6 +52,9 @@ class BookAPIController extends Controller
 
     public function showISBN($isbn) {
         $book = Book::where('ISBN', $isbn)->first();
+        if ($book == null) {
+            abort(404);
+        }
         return new BookResource($book);
     }
 
