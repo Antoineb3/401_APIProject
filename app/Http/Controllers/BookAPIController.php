@@ -10,7 +10,7 @@ class BookAPIController extends Controller
 {
     public function __construct()
     {
-      $this->middleware('auth:api')->except(['index', 'show']);
+      $this->middleware('auth:api')->except(['index', 'show', 'showImg', 'showISBN']);
     }
 
 
@@ -43,7 +43,16 @@ class BookAPIController extends Controller
      */
     public function show(Book $book)
     {
-         return new BookResource($book);
+        return new BookResource($book);
+    }
+
+    public function showImg(Book $book) {
+        return response($book->image, 200);
+    }
+
+    public function showISBN($isbn) {
+        $book = Book::where('ISBN', $isbn)->first();
+        return new BookResource($book);
     }
 
     /**
