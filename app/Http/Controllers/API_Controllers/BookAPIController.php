@@ -22,7 +22,7 @@ class BookAPIController extends Controller
      */
     public function index()
     {
-        return BookResource::collection(Book::all());
+        return BookResource::collection(Book::orderby('id')->get());
     }
 
     // /**
@@ -56,6 +56,6 @@ class BookAPIController extends Controller
         if ($book == null) {
             abort(404);
         }
-        return new BookResource($book); //converts to JSON 
+        return new BookResource($book); //converts to JSON
     }
 }

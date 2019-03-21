@@ -21,7 +21,7 @@ class AuthorAPIController extends Controller
      */
     public function index()
     {
-        return AuthorResource::collection(Author::all());
+        return AuthorResource::collection(Author::orderby('id')->get());
     }
 
     /**
