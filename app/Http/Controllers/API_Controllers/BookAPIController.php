@@ -10,6 +10,7 @@ class BookAPIController extends Controller
 {
     public function __construct()
     {
+        //TODO: this is not doing anything?
       $this->middleware('auth:api')->except(['index', 'show', 'showImg', 'showISBN']);
     }
 
@@ -24,16 +25,16 @@ class BookAPIController extends Controller
         return BookResource::collection(Book::all());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+    // /**
+    //  * Store a newly created resource in storage.
+    //  *
+    //  * @param  \Illuminate\Http\Request  $request
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function store(Request $request)
+    // {
+    //     //
+    // }
 
     /**
      * Display the specified resource.
@@ -55,29 +56,6 @@ class BookAPIController extends Controller
         if ($book == null) {
             abort(404);
         }
-        return new BookResource($book);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return new BookResource($book); //converts to JSON 
     }
 }
