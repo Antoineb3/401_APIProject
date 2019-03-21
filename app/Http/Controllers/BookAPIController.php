@@ -47,7 +47,7 @@ class BookAPIController extends Controller
     }
 
     public function showImg(Book $book) {
-        return response($book->image, 200);
+        return response($book->image, 200); //must return a response(), not just a string
     }
 
     public function showISBN($isbn) {
