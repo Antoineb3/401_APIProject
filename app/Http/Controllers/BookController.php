@@ -31,10 +31,13 @@ class BookController extends Controller
      */
     public function index()
     {
+        $request = Request::create('/api/books', 'GET');
+        $response = Route::dispatch($request);
 
+        return ($response);
         // $books = Auth::user()->books; // gets all books from this user
-        $books = Book::orderby('id')->get();     //get all books
-        return view('books.index')->with('books',$books);
+        // $books = Book::orderby('id')->get();     //get all books
+        // return view('books.index')->with('books',$books);
     }
 
     /**
