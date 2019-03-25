@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Auth;
 // use Illuminate\Http\Request;
 use App\Http\Requests\BookRequest;
 
+// The following two import are the exact imports needed for the show() method, please do not change
+use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\Route;
+// use Illuminate\Support\Facades\URL;
+
 class BookController extends Controller
 {
 
@@ -25,6 +31,7 @@ class BookController extends Controller
      */
     public function index()
     {
+
         // $books = Auth::user()->books; // gets all books from this user
         $books = Book::orderby('id')->get();     //get all books
         return view('books.index')->with('books',$books);
@@ -93,12 +100,36 @@ class BookController extends Controller
     //go to an book from the URL=: /book/{id}
     public function show($id)
     {
+
+      $request = Request::create('/api/books/'.$id, 'GET');
+      $response = Route::dispatch($request);
+
+      dd($response);
+
+    //    dd(url::to('/'));
+      //   $origin = Input::get('origin');
+      // $destination = Input::get('destination');
+
+      // $url = URL::to('/')."/api/books";
+      // //dd($url);
+      // $json = json_decode(file_get_contents($url), true);
+
+      // dd($json);
+
+      // dd("Test");
+
+      //return redirect('api/books/'.$id);
+
+      // $json = json_decode(file_get_contents('/api/books/ {{ $id }}'), true);
+      // return $json;
+      /*
         if(!ctype_digit($id)){ // string consists of all digs, thus is an int
             abort(404);
         }
         $book = Book::findOrFail($id);
         // the 'findOrFail' basically does this: if(is_null($book)) abort(404);
         return view('books.show', compact('book')); // compact() replaces with()
+        */
     }
 
 
