@@ -33,8 +33,30 @@ class BookController extends Controller
     {
         $request = Request::create('/api/books', 'GET');
         $response = Route::dispatch($request);
+        // dd($response);
+        $data = json_decode($response->content(), true);
+        // dd($data);
+        // $area = json_decode($string, true);
 
-        return ($response);
+        // foreach($data['data'] as $i => $v)
+        // {
+        //     dd($v['name']."<br/>");
+        // }
+        //return $data;
+        //$response->content();
+       // $items = $data::all()->toJson();
+         //$books = $data['data'];
+        // var_dump($books);
+        // return $books;
+        // $collection = collect(json_decode($response, true));
+        // $data = $collection->where('id', 1)->image;
+        // dd($data);
+        // $books = collect($data);
+        // dd($books);
+         // $test = compact('books');
+         // dd($test);
+        return view('books.index')->with('books', $data['data']);
+        // return ($response);
         // $books = Auth::user()->books; // gets all books from this user
         // $books = Book::orderby('id')->get();     //get all books
         // return view('books.index')->with('books',$books);
@@ -107,9 +129,14 @@ class BookController extends Controller
       $request = Request::create('/api/books/'.$id, 'GET');
       $response = Route::dispatch($request);
 
-      dd($response);
+      // dd($response);
+      $book = json_decode($response->content(), true);
 
-    //    dd(url::to('/'));
+      $test = new Book();
+      $test->forceFill($book['data']);
+      // $book = $response->content();
+      // dd($book);
+      //  dd(url::to('/'));
       //   $origin = Input::get('origin');
       // $destination = Input::get('destination');
 
@@ -125,14 +152,14 @@ class BookController extends Controller
 
       // $json = json_decode(file_get_contents('/api/books/ {{ $id }}'), true);
       // return $json;
-      /*
+      
         if(!ctype_digit($id)){ // string consists of all digs, thus is an int
             abort(404);
         }
-        $book = Book::findOrFail($id);
+        // $book = Book::findOrFail($id);
         // the 'findOrFail' basically does this: if(is_null($book)) abort(404);
-        return view('books.show', compact('book')); // compact() replaces with()
-        */
+        return view('books.show')->with('book', $test); // compact() replaces with()
+        
     }
 
 
