@@ -45,7 +45,9 @@
         @endif
 
         <br>
-        <img src="{{$book->image}}" alt="book img"  width="20%">
+          <a href="{{$book->id}}/image">
+            <img src="{{$book->image}}" alt="book img"  width="20%">
+          </a>
         <hr>
 
 

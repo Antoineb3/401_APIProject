@@ -27,3 +27,5 @@ Route::resource('books', 'BookController');
 Route::resource('authors', 'AuthorController');
 Route::resource('users', 'UserController');
 Route::resource('comments', 'CommentController');
+
+Route::get('books/{book}/image', 'BookController@showImg');
