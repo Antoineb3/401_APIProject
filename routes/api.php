@@ -24,5 +24,6 @@ Route::post('login', 'AuthController@login');
 Route::apiResource('authors', 'AuthorAPIController');
 Route::apiResource('books', 'BookAPIController');
 
+Route::get('books/findauthors/{book_id}', 'BookAPIController@findBookAuthors');
 Route::get('books/{book}/image', 'BookAPIController@showImg');
 Route::get('books/isbn/{isbn}', 'BookAPIController@showISBN');

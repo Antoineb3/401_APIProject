@@ -9,7 +9,7 @@
 
 
         <h2> Author(s):
-            {{implode(', ', $book->authors()->pluck('name')->toArray())}}
+            {{implode(', ', $book_authors)}}
         </h2>
 
         <h4> ISBN: {{$book->ISBN}}</h4>

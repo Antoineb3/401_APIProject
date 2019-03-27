@@ -33,33 +33,9 @@ class BookController extends Controller
     {
         $request = Request::create('/api/books', 'GET');
         $response = Route::dispatch($request);
-        // dd($response);
         $data = json_decode($response->content(), true);
-        // dd($data);
-        // $area = json_decode($string, true);
-
-        // foreach($data['data'] as $i => $v)
-        // {
-        //     dd($v['name']."<br/>");
-        // }
-        //return $data;
-        //$response->content();
-       // $items = $data::all()->toJson();
-         //$books = $data['data'];
-        // var_dump($books);
-        // return $books;
-        // $collection = collect(json_decode($response, true));
-        // $data = $collection->where('id', 1)->image;
-        // dd($data);
-        // $books = collect($data);
-        // dd($books);
-         // $test = compact('books');
-         // dd($test);
+        
         return view('books.index')->with('books', $data['data']);
-        // return ($response);
-        // $books = Auth::user()->books; // gets all books from this user
-        // $books = Book::orderby('id')->get();     //get all books
-        // return view('books.index')->with('books',$books);
     }
 
     /**
@@ -115,7 +91,6 @@ class BookController extends Controller
         }
         // Auth::user()->books()->save($book);
 
-        // TODO: we do want to check the level of Authentication, but we dont want to put the users ID on it
 
         // Book::create($request->all()); //adds row to DB //gets everything on POST (from the books/create page)
         return redirect('books');
@@ -126,39 +101,26 @@ class BookController extends Controller
     public function show($id)
     {
 
-      $request = Request::create('/api/books/'.$id, 'GET');
-      $response = Route::dispatch($request);
+      $request_bookByID = Request::create('/api/books/'.$id, 'GET');
+      $response_bookJSON = Route::dispatch($request_bookByID);
+      $book_json = json_decode($response_bookJSON->content(), true);
+      $book = new Book();
+      $book->forceFill($book_json['data']);
 
-      // dd($response);
-      $book = json_decode($response->content(), true);
+      $request_bookAuthors = Request::create('/api/books/findauthors/'.$id, 'GET');
+      $response_authorsJSON = Route::dispatch($request_bookAuthors);
 
-      $test = new Book();
-      $test->forceFill($book['data']);
-      // $book = $response->content();
-      // dd($book);
-      //  dd(url::to('/'));
-      //   $origin = Input::get('origin');
-      // $destination = Input::get('destination');
-
-      // $url = URL::to('/')."/api/books";
-      // //dd($url);
-      // $json = json_decode(file_get_contents($url), true);
-
-      // dd($json);
-
-      // dd("Test");
-
-      //return redirect('api/books/'.$id);
-
-      // $json = json_decode(file_get_contents('/api/books/ {{ $id }}'), true);
-      // return $json;
+      $book_authors = json_decode($response_authorsJSON->content());
       
         if(!ctype_digit($id)){ // string consists of all digs, thus is an int
             abort(404);
         }
-        // $book = Book::findOrFail($id);
-        // the 'findOrFail' basically does this: if(is_null($book)) abort(404);
-        return view('books.show')->with('book', $test); // compact() replaces with()
+
+        $auth_names = [];
+        foreach($book_authors as $author) {
+          array_push($auth_names, $author->name);
+        }
+        return view('books.show')->with('book', $book)->with('book_authors', $auth_names);
         
     }
 

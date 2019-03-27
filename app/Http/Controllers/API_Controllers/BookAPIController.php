@@ -11,7 +11,7 @@ class BookAPIController extends Controller
     public function __construct()
     {
         //TODO: this is not doing anything?
-      $this->middleware('auth:api')->except(['index', 'show', 'showImg', 'showISBN']);
+      $this->middleware('auth:api')->except(['index', 'show', 'showImg', 'showISBN', 'findBookAuthors']);
     }
 
 
@@ -57,5 +57,13 @@ class BookAPIController extends Controller
             abort(404);
         }
         return new BookResource($book); //converts to JSON
+    }
+
+    public function findBookAuthors($book_id)
+    {
+
+        $book = Book::where('id', $book_id)->first();
+
+        return $book->authors;
     }
 }

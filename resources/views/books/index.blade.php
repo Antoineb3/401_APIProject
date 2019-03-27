@@ -39,7 +39,7 @@
                 {{$book['name']}}
             </a>
         </h2>
-        {{$book['publiser']}}, {{$book['publication_year']}}
+        {{$book['publisher']}}, {{$book['publication_year']}}
     </div>
 </div>
 
