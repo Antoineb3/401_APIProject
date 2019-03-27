@@ -29,3 +29,4 @@ Route::resource('users', 'UserController');
 Route::resource('comments', 'CommentController');
 
 Route::get('books/{book}/image', 'BookController@showImg');
+Route::get('books/isbn/{isbn}', 'BookController@showISBN');

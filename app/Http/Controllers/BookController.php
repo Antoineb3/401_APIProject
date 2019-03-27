@@ -105,11 +105,17 @@ class BookController extends Controller
     //go to an book from the URL=: /book/{id}
     public function show($id)
     {
+      if(!ctype_digit($id)){ // string consists of all digs, thus is an int
+        abort(404);
+      }
 
       $request_bookByID = Request::create('/api/books/'.$id, 'GET');
       $response_bookJSON = Route::dispatch($request_bookByID);
       $book_json = json_decode($response_bookJSON->content(), true);
-
+      
+      if($book_json == null) {
+        abort(404);
+      }
       // Create new book from json decode arrays
       $book = new Book();
       $book->forceFill($book_json['data']);
@@ -121,12 +127,6 @@ class BookController extends Controller
       $response_authorsJSON = Route::dispatch($request_bookAuthors);
 
       $book_authors = json_decode($response_authorsJSON->content());
-
-
-      
-      if(!ctype_digit($id)){ // string consists of all digs, thus is an int
-          abort(404);
-      }
 
       // create authors name array for show.blade
 
@@ -244,11 +244,50 @@ class BookController extends Controller
     }
 
     public function showImg($id) {
-        //return view(response($book->image, 200);
-      //      $request_bookAuthors = Request::create('/api/books/findauthors/'.$id, 'GET');
+
+      if(!ctype_digit($id)){ // string consists of all digs, thus is an int
+          abort(404);
+      }
+
       $request_image = Request::create('/api/books/'.$id.'/image', 'GET');
       $response_image = Route::dispatch($request_image);
-      // dd($response_image->content());
+
         return view('books.image')->with('image_src',$response_image->content());
+    }
+
+    public function showISBN($isbn) {
+
+       if(!ctype_digit($isbn)){ // string consists of all digs, thus is an int
+          abort(404);
+       }
+      $request_bookByISBN = Request::create('/api/books/isbn/'.$isbn, 'GET');
+
+      $response_bookJSON = Route::dispatch($request_bookByISBN);
+      // dd($response_bookJSON);
+      $book_json = json_decode($response_bookJSON->content(), true);
+
+      if($book_json == null) {
+        abort(404);
+      }
+      // dd($book_json);
+      // Create new book from json decode arrays
+      $book = new Book();
+      $book->forceFill($book_json['data']);
+
+
+      // Get associated authors for this book
+
+      $request_bookAuthors = Request::create('/api/books/findauthors/'.$book->id, 'GET');
+      $response_authorsJSON = Route::dispatch($request_bookAuthors);
+
+      $book_authors = json_decode($response_authorsJSON->content());
+
+      // create authors name array for show.blade
+
+      $auth_names = [];
+      foreach($book_authors as $author) {
+        array_push($auth_names, $author->name);
+      }
+      return view('books.show')->with('book', $book)->with('book_authors', $auth_names);
     }
 }
