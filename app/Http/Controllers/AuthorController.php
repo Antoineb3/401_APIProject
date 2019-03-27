@@ -4,14 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Author;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use App\User;
+
+
 
 class AuthorController extends Controller
 {
 
     public function __construct()
     {
-      $this->middleware('user');
+      //$this->middleware('user');
     }
 
     /**
@@ -21,8 +24,15 @@ class AuthorController extends Controller
      */
     public function index()
     {
-        $authors = Author::all();     //get all authors
-        return view('authors.index')->with('authors',$authors);
+        $request_authors = Request::create('/api/authors', 'GET');
+
+        // dispatch request to API
+        $response_authorsJSON = Route::dispatch($request_authors);
+
+        //decode the response json into arrays (true argument)
+        $authors = json_decode($response_authorsJSON->content(), true);
+
+        return view('authors.index')->with('authors',$authors['data']);
     }
 
     /**

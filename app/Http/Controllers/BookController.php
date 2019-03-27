@@ -13,7 +13,7 @@ use App\Http\Requests\BookRequest;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Route;
-// use Illuminate\Support\Facades\URL;
+
 
 class BookController extends Controller
 {
@@ -112,7 +112,7 @@ class BookController extends Controller
       $request_bookByID = Request::create('/api/books/'.$id, 'GET');
       $response_bookJSON = Route::dispatch($request_bookByID);
       $book_json = json_decode($response_bookJSON->content(), true);
-      
+
       if($book_json == null) {
         abort(404);
       }

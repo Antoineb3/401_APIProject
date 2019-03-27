@@ -19,7 +19,7 @@
 
 <div>
 
-        <h4>{{$author->name}}</h4>
+        <h4>{{$author['name']}}</h4>
 
         @if(Auth::check() && Auth::User()->isAdmin())
             <div class="btn-group-vertical">
