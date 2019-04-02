@@ -25,7 +25,8 @@ class AuthorController extends Controller
     public function index()
     {
 
-        // ******* METHOD 1 ****** //
+        // ******* METHOD 1 ****** AJAX Request//
+        //comment out the line below to use Method 2
         return view('authors.index2');
 
 

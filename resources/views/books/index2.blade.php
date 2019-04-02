@@ -22,7 +22,7 @@
                   }
               });
                $.ajax({
-                  url: "{{ url('/api/books') }}",
+                  url: "{{ url('/api/books') }}", // get JSON list of books
                   method: 'GET',
                   data: {
                
@@ -30,7 +30,7 @@
                   success: function(result){
 
 					    $.each(result['data'], function (index, value) {
-					    	console.log(value);
+					    	// console.log(value);
 					        $("#books").append (
 					       " <div class='row'>" + 
 							"<div class='col-md-1'>" + 

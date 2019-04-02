@@ -15,15 +15,16 @@
 
 @if(isset($id))
 <script>
+		//getting book by ID
          $(document).ready(function(){
-         	console.log("Getting book by ID");
+         	// console.log("Getting book by ID");
                $.ajaxSetup({
                   headers: {
                       'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
                   }
               });
                $.ajax({
-                  url: "{{ url('/api/books/'.$id) }}",
+                  url: "{{ url('/api/books/'.$id) }}", // return JSON book
                   method: 'GET',
                   data: {
                
@@ -37,10 +38,10 @@
 				        "<h2> Publisher: " + value['publisher'] + ", " + value['publication_year'] + "</h2>" + 
 
 
-				        "<h2> Author(s): ");// + 
+				        "<h2> Author(s): ");
 
 	                  	$.ajax({
-	                  		url: "{{ url('/api/books/findauthors/')}}" + "/" + value['id'],
+	                  		url: "{{ url('/api/books/findauthors/')}}" + "/" + value['id'],// get the authors (JSON) of the book
 	                  		method: 'GET',
 	                  		data: {
 
@@ -75,6 +76,7 @@
 
 @else
 <script>
+	//getting book by ISBN
          $(document).ready(function(){
          	console.log("Getting Book by ISBN");
                $.ajaxSetup({
@@ -83,7 +85,7 @@
                   }
               });
                $.ajax({
-                  url: "{{ url('/api/books/isbn/'.$isbn) }}",
+                  url: "{{ url('/api/books/isbn/'.$isbn) }}", // returns a book JSON
                   method: 'GET',
                   data: {
                
@@ -98,10 +100,10 @@
 				        "<h2> Publisher: " + value['publisher'] + ", " + value['publication_year'] + "</h2>" + 
 
 
-				        "<h2> Author(s): ");// + 
+				        "<h2> Author(s): ");
 
 	                  	$.ajax({
-	                  		url: "{{ url('/api/books/findauthors/')}}" + "/" + value['id'],
+	                  		url: "{{ url('/api/books/findauthors/')}}" + "/" + value['id'], // get the authors (JSON) of the book
 	                  		method: 'GET',
 	                  		data: {
 

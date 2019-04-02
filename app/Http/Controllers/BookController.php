@@ -31,8 +31,8 @@ class BookController extends Controller
      */
     public function index()
     {
-      // ****** METHOD 1 ********** //
-      // ** comment the line below to use method 2
+      // ****** METHOD 1 ********** AJAX Request //
+      // ** comment out the line below to use method 2
       return view('books.index2');
 
       
