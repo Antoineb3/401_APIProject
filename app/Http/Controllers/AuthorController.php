@@ -24,6 +24,12 @@ class AuthorController extends Controller
      */
     public function index()
     {
+
+        // ******* METHOD 1 ****** //
+        return view('authors.index2');
+
+
+        // ******** METHOD 2 ********* //
         $request_authors = Request::create('/api/authors', 'GET');
 
         // dispatch request to API

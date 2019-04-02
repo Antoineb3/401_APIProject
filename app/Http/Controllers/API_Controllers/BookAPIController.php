@@ -44,7 +44,10 @@ class BookAPIController extends Controller
      */
     public function show(Book $book)
     {
-        return new BookResource($book);
+        $temp =  new BookResource($book);
+        $returningBook = Book::where('id', $temp->id)->first();
+        // return $book_temp;
+        return $returningBook;
     }
 
     public function showImg(Book $book) {

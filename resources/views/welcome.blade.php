@@ -4,6 +4,11 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+        <script src="http://code.jquery.com/jquery-3.3.1.min.js"
+              integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+              crossorigin="anonymous">
+        </script>
+
         <title>Group 11 Project</title>
 
         <!-- Fonts -->
@@ -84,10 +89,11 @@
                     Group 11 Library
                 </div>
 
-                <div class="links">
+                <div class="links" id="viewBooks">
                     <a href="/books">Books</a>
                 </div>
             </div>
         </div>
     </body>
 </html>
+

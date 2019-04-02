@@ -31,6 +31,12 @@ class BookController extends Controller
      */
     public function index()
     {
+      // ****** METHOD 1 ********** //
+      // ** comment the line below to use method 2
+      return view('books.index2');
+
+      
+      //******** METHOD 2 *********//
         // Create GET request to use books api
         $request = Request::create('/api/books', 'GET');
 
@@ -109,9 +115,16 @@ class BookController extends Controller
         abort(404);
       }
 
+      // ******** METHOD 1 *****//
+      return view('books.show2')->with('id', $id);
+
+
+      // ********* METHOD 2 *****//
       $request_bookByID = Request::create('/api/books/'.$id, 'GET');
       $response_bookJSON = Route::dispatch($request_bookByID);
       $book_json = json_decode($response_bookJSON->content(), true);
+
+
 
       if($book_json == null) {
         abort(404);
@@ -260,6 +273,11 @@ class BookController extends Controller
        if(!ctype_digit($isbn)){ // string consists of all digs, thus is an int
           abort(404);
        }
+
+       // **** METHOD 1 ****** //
+       return view('books.show2')->with('isbn', $isbn);
+
+       // **** METHOD 2 ****** //
       $request_bookByISBN = Request::create('/api/books/isbn/'.$isbn, 'GET');
 
       $response_bookJSON = Route::dispatch($request_bookByISBN);
